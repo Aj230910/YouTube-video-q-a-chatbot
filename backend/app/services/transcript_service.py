@@ -1,4 +1,8 @@
-from youtube_transcript_api import YouTubeTranscriptApi
+import os
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class TranscriptService:
@@ -6,27 +10,56 @@ class TranscriptService:
     @staticmethod
     def fetch_transcript(video_id: str):
 
-        try:
-            api = YouTubeTranscriptApi()
+        api_key = os.getenv("SUPADATA_API_KEY")
 
-            transcript = api.fetch(video_id)
-
-            return [
-                {
-                    "text": item.text,
-                    "start": float(item.start),
-                    "duration": float(item.duration)
-                }
-                for item in transcript
-            ]
-
-        except Exception as e:
-            import traceback
-
-            print("TRANSCRIPT ERROR")
-            print(str(e))
-            print(traceback.format_exc())
-
+        if not api_key:
             raise Exception(
-                f"YouTube Transcript error: {str(e)}"
+                "SUPADATA_API_KEY not found"
             )
+
+        video_url = (
+            f"https://www.youtube.com/watch?v={video_id}"
+        )
+
+        response = requests.get(
+            "https://api.supadata.ai/v1/youtube/transcript",
+            headers={
+                "x-api-key": api_key
+            },
+            params={
+                "url": video_url
+            },
+            timeout=30
+        )
+
+        if response.status_code != 200:
+            raise Exception(
+                f"Supadata API Error: {response.text}"
+            )
+
+        data = response.json()
+
+        transcript = []
+
+        for item in data.get(
+            "transcript",
+            []
+        ):
+
+            transcript.append(
+                {
+                    "text": item.get(
+                        "text",
+                        ""
+                    ),
+                    "start": float(
+                        item.get(
+                            "offset",
+                            0
+                        )
+                    ),
+                    "duration": 0.0
+                }
+            )
+
+        return transcript
