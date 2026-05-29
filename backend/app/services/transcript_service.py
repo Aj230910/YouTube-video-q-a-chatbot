@@ -9,8 +9,38 @@ class TranscriptService:
         Tries English first, then falls back to other available languages.
         """
         try:
-            transcript_list = YouTubeTranscriptApi().list(video_id)
-            
+            # Support both older (0.6.x) and newer (1.x.x) versions of youtube-transcript-api
+            transcript_list = None
+            if hasattr(YouTubeTranscriptApi, 'list_transcripts'):
+                # Older version classmethod
+                transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+            else:
+                # Newer version instance method
+                try:
+                    api_instance = YouTubeTranscriptApi()
+                    if hasattr(api_instance, 'list'):
+                        transcript_list = api_instance.list(video_id)
+                except Exception:
+                    pass
+
+            if transcript_list is None:
+                # Fallback to get_transcript directly if list methods are not available
+                if hasattr(YouTubeTranscriptApi, 'get_transcript'):
+                    raw_data = YouTubeTranscriptApi.get_transcript(video_id)
+                    formatted_transcript = []
+                    for entry in raw_data:
+                        text = entry.text if hasattr(entry, 'text') else getattr(entry, 'get', lambda k, d: '')('text', '')
+                        start = entry.start if hasattr(entry, 'start') else getattr(entry, 'get', lambda k, d: 0.0)('start', 0.0)
+                        duration = entry.duration if hasattr(entry, 'duration') else getattr(entry, 'get', lambda k, d: 0.0)('duration', 0.0)
+                        formatted_transcript.append({
+                            "text": str(text).replace("\n", " ").strip(),
+                            "start": float(start),
+                            "duration": float(duration)
+                        })
+                    return formatted_transcript
+                else:
+                    raise Exception("YouTubeTranscriptApi does not support transcript listing or retrieval in this environment.")
+
             # Try to get English transcript (manual or generated)
             try:
                 transcript = transcript_list.find_transcript(['en'])
