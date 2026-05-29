@@ -1,4 +1,24 @@
 import os
+# Configure PyTorch to use a single thread to save memory on Render
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
+try:
+    import torch
+    try:
+        torch.set_num_threads(1)
+    except Exception:
+        pass
+    try:
+        torch.set_num_interop_threads(1)
+    except Exception:
+        pass
+except ImportError:
+    pass
+
 import time
 import logging
 from fastapi import FastAPI, Request, status
@@ -53,6 +73,16 @@ app.add_middleware(
 # Include routers
 app.include_router(video.router)
 app.include_router(qa.router)
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Pre-loading SentenceTransformer model on startup...")
+    try:
+        from app.services.embedding_service import EmbeddingService
+        EmbeddingService.get_model()
+        logger.info("SentenceTransformer model loaded successfully.")
+    except Exception as e:
+        logger.error(f"Failed to pre-load SentenceTransformer model: {str(e)}")
 
 @app.get("/health", response_model=HealthResponse, tags=["health"])
 async def health_check():
