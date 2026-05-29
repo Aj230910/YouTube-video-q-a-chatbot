@@ -41,11 +41,11 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
     const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
     return parts.map((part, index) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={index} className="font-extrabold text-slate-950 dark:text-white">{part.slice(2, -2)}</strong>;
+        return <strong key={index} className="font-extrabold text-white">{part.slice(2, -2)}</strong>;
       }
       if (part.startsWith('`') && part.endsWith('`')) {
         return (
-          <code key={index} className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700/60 text-brand-650 dark:text-brand-400 rounded text-xs font-mono font-bold border border-slate-300/40 dark:border-slate-800/40">
+          <code key={index} className="px-1.5 py-0.5 bg-[#0F0F0F] text-[#FF0000] rounded text-xs font-mono font-bold border border-[#303030]/50">
             {part.slice(1, -1)}
           </code>
         );
@@ -68,9 +68,9 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
         const code = language ? lines.slice(1).join('\n') : lines.join('\n');
         
         return (
-          <pre key={index} className="my-2.5 p-3.5 bg-slate-950 dark:bg-slate-950 text-slate-100 rounded-xl overflow-x-auto text-[11px] font-mono leading-relaxed border border-slate-800/80 shadow-inner">
+          <pre key={index} className="my-2.5 p-3.5 bg-[#0F0F0F] text-[#white] rounded-xl overflow-x-auto text-[11px] font-mono leading-relaxed border border-[#303030] shadow-inner">
             {language && (
-              <div className="text-[9px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5 border-b border-slate-900 pb-1">
+              <div className="text-[9px] uppercase tracking-wider text-[#AAAAAA] font-extrabold mb-1.5 border-b border-[#303030]/60 pb-1">
                 {language}
               </div>
             )}
@@ -81,27 +81,27 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
       
       const lines = part.split('\n');
       return (
-        <div key={index} className="flex flex-col gap-1">
+        <div key={index} className="flex flex-col gap-1.5">
           {lines.map((line, lineIdx) => {
             const trimmed = line.trim();
             // Headers
             if (trimmed.startsWith('### ')) {
               return (
-                <h4 key={lineIdx} className="font-extrabold text-sm md:text-base text-slate-900 dark:text-white mt-3 mb-1">
+                <h4 key={lineIdx} className="font-extrabold text-sm md:text-base text-white mt-3 mb-1">
                   {parseInlineStyles(trimmed.substring(4))}
                 </h4>
               );
             }
             if (trimmed.startsWith('## ')) {
               return (
-                <h3 key={lineIdx} className="font-extrabold text-base md:text-lg text-slate-900 dark:text-white mt-4 mb-1">
+                <h3 key={lineIdx} className="font-extrabold text-base md:text-lg text-white mt-4 mb-1">
                   {parseInlineStyles(trimmed.substring(3))}
                 </h3>
               );
             }
             if (trimmed.startsWith('# ')) {
               return (
-                <h2 key={lineIdx} className="font-extrabold text-lg md:text-xl text-slate-900 dark:text-white mt-5 mb-1">
+                <h2 key={lineIdx} className="font-extrabold text-lg md:text-xl text-white mt-5 mb-1">
                   {parseInlineStyles(trimmed.substring(2))}
                 </h2>
               );
@@ -110,7 +110,7 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
             // Bullet lists
             if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
               return (
-                <li key={lineIdx} className="ml-4 list-disc text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed my-0.5 pl-1">
+                <li key={lineIdx} className="ml-4 list-disc text-xs md:text-sm text-[#AAAAAA] leading-relaxed my-0.5 pl-1 font-medium">
                   {parseInlineStyles(trimmed.substring(2))}
                 </li>
               );
@@ -120,8 +120,8 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
             const numMatch = trimmed.match(/^(\d+)\.\s(.*)/);
             if (numMatch) {
               return (
-                <div key={lineIdx} className="ml-2 flex items-start gap-1.5 text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed my-0.5">
-                  <span className="font-bold text-brand-600 dark:text-brand-400">{numMatch[1]}.</span>
+                <div key={lineIdx} className="ml-2 flex items-start gap-1.5 text-xs md:text-sm text-[#AAAAAA] leading-relaxed my-0.5 font-medium">
+                  <span className="font-bold text-[#FF0000]">{numMatch[1]}.</span>
                   <span>{parseInlineStyles(numMatch[2])}</span>
                 </div>
               );
@@ -131,7 +131,7 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
             return trimmed === '' ? (
               <div key={lineIdx} className="h-1.5" />
             ) : (
-              <p key={lineIdx} className="text-xs md:text-sm leading-relaxed my-0.5">
+              <p key={lineIdx} className="text-xs md:text-sm leading-relaxed my-0.5 text-zinc-100 font-medium">
                 {parseInlineStyles(line)}
               </p>
             );
@@ -142,44 +142,47 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
   };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/60 rounded-2xl overflow-hidden shadow-md transition-all duration-300">
+    <div className="flex flex-col h-full bg-[#1A1A1A] border border-[#303030]/50 rounded-3xl overflow-hidden shadow-2xl relative transition-all duration-300">
       
+      {/* Background ambient red glow inside chat panel */}
+      <div className="glow-primary -top-20 -left-20 opacity-30 animate-pulse-ambient" />
+
       {/* Header */}
-      <div className="p-4 border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50 relative">
+      <div className="p-4 border-b border-[#303030]/50 flex items-center justify-between bg-[#1A1A1A]/80 backdrop-blur-md relative z-10">
         <div className="flex items-center gap-3">
-          <div className="bg-brand-100 dark:bg-brand-950/40 border border-brand-200/40 dark:border-brand-900/40 text-brand-650 dark:text-brand-400 p-2 rounded-xl">
+          <div className="bg-red-950/20 border border-red-900/30 text-[#FF0000] p-2.5 rounded-xl">
             <Brain className="w-4.5 h-4.5 animate-pulse-slow" />
           </div>
           <div>
-            <h3 className="font-extrabold text-slate-850 dark:text-slate-150 text-xs md:text-sm">
+            <h3 className="font-extrabold text-white text-xs md:text-sm font-sans">
               AI Assistant Q&A
             </h3>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold mt-0.5">
+            <p className="text-[10px] text-[#AAAAAA] font-semibold mt-0.5">
               Grounded strictly in video content to prevent hallucination
             </p>
           </div>
         </div>
         
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100/50 dark:border-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold">
-          <Sparkles className="w-3 h-3 text-indigo-500" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F0F0F] border border-[#303030] text-[#AAAAAA] text-[10px] font-bold">
+          <Sparkles className="w-3 h-3 text-[#FF0000]" />
           <span>RAG Pipeline</span>
         </div>
       </div>
 
       {/* Messages Feed */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-6">
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-6 relative z-10">
         {messages.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center p-8 max-w-md mx-auto">
             <div className="relative mb-6">
-              <div className="absolute inset-0 bg-brand-500/10 rounded-full blur-xl pulse-ring-slow" />
-              <div className="relative bg-gradient-to-tr from-brand-100 to-indigo-50 dark:from-brand-950 dark:to-slate-900 p-5 rounded-full border border-brand-200/40 dark:border-brand-900/40 text-brand-600 dark:text-brand-400 shadow-inner">
+              <div className="absolute inset-0 bg-[#FF0000]/10 rounded-full blur-xl animate-pulse-ambient" />
+              <div className="relative bg-gradient-to-tr from-[#212121] to-[#1A1A1A] p-6 rounded-full border border-[#303030] text-[#FF0000] shadow-2xl animate-float">
                 <Sparkles className="w-10 h-10" />
               </div>
             </div>
-            <h4 className="font-extrabold text-slate-800 dark:text-slate-200 text-sm md:text-base">
+            <h4 className="font-extrabold text-white text-sm md:text-base font-sans">
               Ask Anything About the Video
             </h4>
-            <p className="text-slate-400 dark:text-slate-500 text-xs mt-2 leading-relaxed font-semibold">
+            <p className="text-[#AAAAAA] text-xs mt-2.5 leading-relaxed font-semibold">
               Pose your question and Gemini will search the segmented transcript index to synthesize a precise cited response.
             </p>
           </div>
@@ -189,14 +192,14 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
             return (
               <div
                 key={message.id}
-                className={`flex gap-3 max-w-[88%] ${isUser ? 'self-end flex-row-reverse' : 'self-start'}`}
+                className={`flex gap-3.5 max-w-[88%] ${isUser ? 'self-end flex-row-reverse' : 'self-start'}`}
               >
                 {/* Avatar */}
                 <div
-                  className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center border text-xs shadow-sm ${
+                  className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center border text-xs shadow-md transition-transform duration-200 hover:scale-105 ${
                     isUser
-                      ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700'
-                      : 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 border-zinc-800 dark:border-zinc-200 shadow'
+                      ? 'bg-[#212121] text-[#AAAAAA] border-[#303030]'
+                      : 'bg-[#FF0000] text-white border-transparent'
                   }`}
                 >
                   {isUser ? <User className="w-4 h-4 stroke-[2]" /> : <Brain className="w-4 h-4" />}
@@ -205,10 +208,10 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
                 {/* Message Body */}
                 <div className="flex flex-col gap-2 max-w-full">
                   <div
-                    className={`p-3.5 rounded-2xl leading-relaxed shadow-sm ${
+                    className={`p-4 rounded-2xl leading-relaxed shadow-lg transition-all duration-200 ${
                       isUser
-                        ? 'bg-blue-600 text-white rounded-tr-none font-bold text-xs md:text-sm'
-                        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-850 dark:text-zinc-200 rounded-tl-none border border-zinc-200/40 dark:border-zinc-750 font-semibold'
+                        ? 'bg-[#FF0000] text-white rounded-tr-none font-bold text-xs md:text-sm'
+                        : 'bg-[#212121] text-zinc-100 rounded-tl-none border border-[#303030] font-medium'
                     }`}
                   >
                     {isUser ? (
@@ -220,8 +223,8 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
 
                   {/* Sources / Citations for AI answers */}
                   {!isUser && message.sources && message.sources.length > 0 && (
-                    <div className="mt-1 flex flex-col gap-2">
-                      <span className="text-[9px] text-slate-450 dark:text-slate-500 font-extrabold uppercase tracking-widest pl-1">
+                    <div className="mt-2 flex flex-col gap-2">
+                      <span className="text-[9px] text-[#AAAAAA] font-extrabold uppercase tracking-widest pl-1">
                         Timeline Citations:
                       </span>
                       
@@ -237,26 +240,26 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
                           return (
                             <div
                               key={index}
-                              className="flex flex-col rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-950/60 overflow-hidden max-w-full hover:border-brand-500/50 hover:bg-white dark:hover:bg-slate-900 transition-all duration-200 shadow-sm"
+                              className="flex flex-col rounded-xl border border-[#303030] bg-[#1A1A1A]/80 overflow-hidden max-w-full hover:border-[#FF0000]/40 hover:bg-[#212121] transition-all duration-200 shadow-md"
                             >
-                              <div className="flex items-center gap-2 px-2.5 py-1.5 select-none">
+                              <div className="flex items-center gap-2.5 px-3 py-2 select-none">
                                 {/* Time trigger pill */}
                                 <button
                                   onClick={() => onTimestampClick(src.start)}
-                                  className="flex items-center gap-1 text-[10px] font-extrabold text-brand-600 dark:text-brand-400 hover:text-brand-500 dark:hover:text-brand-300 transition-colors cursor-pointer group"
+                                  className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#FF0000] hover:text-[#CC0000] transition-colors cursor-pointer group"
                                   title="Jump to timeline"
                                 >
                                   <Play className="w-2.5 h-2.5 fill-current stroke-none group-hover:scale-110 transition-transform" />
                                   <span>{formatTime(src.start)}</span>
                                 </button>
                                 
-                                <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 border-l border-slate-200 dark:border-slate-800 pl-2">
+                                <span className="text-[9px] font-bold text-zinc-500 border-l border-[#303030] pl-2.5">
                                   {percentMatch}% Match
                                 </span>
 
                                 <button
                                   onClick={() => toggleSourceExpand(message.id, index)}
-                                  className="text-slate-400 dark:text-slate-500 hover:text-slate-750 dark:hover:text-slate-350 ml-1 cursor-pointer transition-colors"
+                                  className="text-zinc-500 hover:text-[#AAAAAA] ml-1.5 cursor-pointer transition-colors"
                                   title="Toggle transcript text"
                                 >
                                   {isExpanded ? (
@@ -268,8 +271,8 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
                               </div>
 
                               {isExpanded && (
-                                <div className="px-3 pb-3 pt-1.5 border-t border-slate-200/50 dark:border-slate-850/60 max-w-sm border-l-2 border-l-brand-500">
-                                  <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed italic font-semibold">
+                                <div className="px-3 pb-3 pt-2 border-t border-[#303030]/50 max-w-sm border-l-2 border-l-[#FF0000]">
+                                  <p className="text-[11px] text-[#AAAAAA] leading-relaxed italic font-semibold">
                                     "{src.text}"
                                   </p>
                                 </div>
@@ -289,21 +292,21 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
         {/* Loading Bubble */}
         {isLoading && (
           <div className="flex gap-3 max-w-[85%] self-start">
-            <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center border bg-gradient-to-tr from-brand-600 to-indigo-600 text-white border-brand-500 animate-pulse">
+            <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center bg-[#FF0000] text-white animate-pulse">
               <Brain className="w-4 h-4" />
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-850 dark:text-slate-200 rounded-tl-none flex items-center gap-1.5 shadow-sm border border-slate-200/10">
-              <div className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            <div className="p-4 rounded-2xl bg-[#212121] border border-[#303030] rounded-tl-none flex items-center gap-1.5 shadow-lg">
+              <div className="w-1.5 h-1.5 bg-[#FF0000] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+              <div className="w-1.5 h-1.5 bg-[#FF0000] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+              <div className="w-1.5 h-1.5 bg-[#FF0000] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
           </div>
         )}
 
         {/* Error inside chat */}
         {error && (
-          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200/50 dark:border-rose-800/30 text-rose-600 dark:text-rose-400 text-xs font-semibold flex items-center gap-2 max-w-[85%] self-center shadow-sm">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-500" />
+          <div className="p-4 rounded-xl bg-red-950/20 border border-red-900/30 text-red-400 text-xs font-semibold flex items-center gap-2 max-w-[85%] self-center shadow-sm">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 text-[#FF0000]" />
             <span>{error}</span>
           </div>
         )}
@@ -312,25 +315,25 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
       </div>
 
       {/* Input Form with Neon Glow Focus */}
-      <form onSubmit={handleSend} className="p-4 border-t border-slate-200/60 dark:border-slate-800/60 flex gap-2 bg-slate-50/30 dark:bg-slate-900/30">
-        <div className="flex-1 relative flex items-center rounded-xl neon-border">
+      <form onSubmit={handleSend} className="p-4 border-t border-[#303030]/50 flex gap-2 bg-[#1A1A1A] relative z-10">
+        <div className="flex-1 relative flex items-center rounded-2xl border border-[#303030] bg-[#0F0F0F] focus-within:ring-4 focus-within:ring-red-500/10 focus-within:border-[#FF0000] transition-all duration-300">
           <input
             type="text"
             placeholder="Ask a question about this video..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
-            className="w-full px-4 py-3 text-xs md:text-sm rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none transition-all font-semibold relative z-10"
+            className="w-full px-4 py-3.5 text-xs md:text-sm bg-transparent text-white placeholder-zinc-650 focus:outline-none font-semibold relative z-10"
           />
         </div>
         
         <button
           type="submit"
           disabled={!input.trim() || isLoading}
-          className={`p-3 rounded-xl transition-all duration-200 flex items-center justify-center cursor-pointer ${
+          className={`p-3.5 rounded-2xl transition-all duration-250 flex items-center justify-center cursor-pointer btn-premium ${
             !input.trim() || isLoading
-              ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-350 dark:text-zinc-600 cursor-not-allowed border border-zinc-200/20'
-              : 'bg-blue-600 hover:bg-blue-500 active:bg-blue-750 text-white shadow-sm active:scale-[0.93]'
+              ? 'bg-[#212121] text-zinc-650 border border-[#303030] cursor-not-allowed'
+              : 'bg-[#FF0000] hover:bg-[#CC0000] text-white shadow-lg shadow-red-500/15 hover:shadow-red-500/35 active:scale-[0.94]'
           }`}
         >
           <Send className="w-4.5 h-4.5" />
@@ -339,4 +342,3 @@ export default function ChatInterface({ messages, onSendMessage, isLoading, erro
     </div>
   );
 }
-

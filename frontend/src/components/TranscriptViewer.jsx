@@ -62,19 +62,19 @@ export default function TranscriptViewer({ transcript, onTimestampClick, videoTi
   };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/60 rounded-2xl overflow-hidden shadow-md transition-all duration-300">
+    <div className="flex flex-col h-full bg-[#1A1A1A] border border-[#303030]/50 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300">
       {/* Header */}
-      <div className="p-4 border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between gap-4 bg-slate-50/50 dark:bg-slate-900/50">
-        <h3 className="font-extrabold text-slate-850 dark:text-slate-150 text-xs md:text-sm flex items-center gap-2">
+      <div className="p-4 border-b border-[#303030]/50 flex items-center justify-between gap-4 bg-[#1A1A1A]/80 backdrop-blur-md">
+        <h3 className="font-extrabold text-white text-xs md:text-sm flex items-center gap-2 font-sans">
           <span>Video Transcript</span>
-          <span className="text-[10px] py-0.5 px-2 bg-slate-200 dark:bg-slate-800 rounded-full font-bold text-slate-550 dark:text-slate-400">
+          <span className="text-[10px] py-0.5 px-2.5 bg-[#212121] border border-[#303030] rounded-full font-bold text-[#AAAAAA]">
             {transcript.length} segments
           </span>
         </h3>
         <button
           onClick={handleDownload}
           title="Download Transcript"
-          className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-650 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-xs font-bold border border-slate-200/50 dark:border-slate-800/50 transition-all cursor-pointer hover:shadow-sm"
+          className="flex items-center gap-1.5 py-2 px-3.5 rounded-xl hover:bg-[#212121] text-[#AAAAAA] hover:text-white text-xs font-bold border border-[#303030] transition-all cursor-pointer hover:shadow-lg btn-premium"
         >
           <Download className="w-3.5 h-3.5" />
           <span>Download</span>
@@ -82,23 +82,23 @@ export default function TranscriptViewer({ transcript, onTimestampClick, videoTi
       </div>
 
       {/* Search Bar with neon focus */}
-      <div className="p-3 border-b border-slate-100 dark:border-slate-800/40 flex items-center">
-        <div className="w-full relative flex items-center rounded-xl neon-border">
-          <Search className="w-4 h-4 text-slate-450 dark:text-slate-500 absolute left-3 z-10" />
+      <div className="p-3 border-b border-[#303030]/40 flex items-center">
+        <div className="w-full relative flex items-center rounded-2xl border border-[#303030] bg-[#0F0F0F] focus-within:ring-4 focus-within:ring-red-500/10 focus-within:border-[#FF0000] transition-all duration-300">
+          <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 z-10" />
           <input
             type="text"
             placeholder="Search transcript phrases..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 text-xs focus:outline-none transition-all font-semibold relative z-10"
+            className="w-full pl-10 pr-4 py-2.5 bg-transparent text-white placeholder-zinc-650 text-xs focus:outline-none transition-all font-semibold relative z-10"
           />
         </div>
       </div>
 
       {/* Transcript list */}
-      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2.5 scrollbar-thin">
         {filteredTranscript.length === 0 ? (
-          <div className="text-center py-12 text-slate-450 dark:text-slate-550 text-xs font-semibold leading-relaxed">
+          <div className="text-center py-12 text-[#AAAAAA] text-xs font-semibold leading-relaxed">
             No matching phrases found.
           </div>
         ) : (
@@ -108,19 +108,19 @@ export default function TranscriptViewer({ transcript, onTimestampClick, videoTi
               <div
                 key={idx}
                 ref={isHighlight ? activeItemRef : null}
-                className={`group flex gap-4 p-2 rounded-xl transition-all duration-200 border ${
+                className={`group flex gap-4 p-3 rounded-2xl transition-all duration-200 border ${
                   isHighlight
-                    ? 'bg-brand-50 border-brand-200/60 dark:bg-brand-950/20 dark:border-brand-900/40 shadow-sm'
-                    : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/30'
+                    ? 'bg-red-950/20 border-[#FF0000]/40 shadow-md active-item-glow'
+                    : 'border-transparent hover:bg-[#212121]/50 hover:border-[#303030]'
                 }`}
               >
                 {/* Play / Timestamp Button */}
                 <button
                   onClick={() => onTimestampClick(item.start)}
-                  className={`flex items-center gap-1 px-2.5 py-1.5 h-fit rounded-lg text-[10px] font-extrabold transition-all border cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 h-fit rounded-xl text-[10px] font-extrabold transition-all border cursor-pointer ${
                     isHighlight
-                      ? 'bg-brand-600 text-white border-brand-500 shadow-sm'
-                      : 'bg-slate-100 group-hover:bg-brand-50 dark:bg-slate-800 group-hover:dark:bg-brand-950/45 text-slate-650 group-hover:text-brand-600 dark:text-slate-400 group-hover:dark:text-brand-400 border-transparent hover:border-brand-200/30'
+                      ? 'bg-[#FF0000] text-white border-transparent shadow-lg'
+                      : 'bg-[#212121] group-hover:bg-[#1A1A1A] text-[#AAAAAA] group-hover:text-white border-[#303030] hover:border-red-500/30'
                   }`}
                 >
                   <Play className={`w-2.5 h-2.5 fill-current ${isHighlight ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 transition-opacity'}`} />
@@ -129,10 +129,10 @@ export default function TranscriptViewer({ transcript, onTimestampClick, videoTi
                 </button>
 
                 {/* Text */}
-                <p className={`flex-1 text-xs leading-relaxed font-semibold pt-0.5 transition-colors ${
+                <p className={`flex-1 text-xs leading-relaxed font-medium pt-0.5 transition-colors ${
                   isHighlight
-                    ? 'text-slate-900 dark:text-white font-extrabold'
-                    : 'text-slate-600 dark:text-slate-350'
+                    ? 'text-white font-extrabold'
+                    : 'text-[#AAAAAA] group-hover:text-white'
                 }`}>
                   {item.text}
                 </p>
@@ -144,4 +144,3 @@ export default function TranscriptViewer({ transcript, onTimestampClick, videoTi
     </div>
   );
 }
-

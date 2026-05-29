@@ -8,35 +8,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: '#f2f5ff',
-          100: '#e5ebff',
-          200: '#c7d7ff',
-          300: '#99b8ff',
-          400: '#6691ff',
-          500: '#3b66ff',
-          600: '#2544db',
-          700: '#1c31b3',
-          800: '#1c2b91',
-          900: '#1b2778',
-          950: '#101547',
+        yt: {
+          bg: '#0F0F0F',
+          surface: '#1A1A1A',
+          card: '#212121',
+          border: '#303030',
+          primary: '#FF0000',
+          secondary: '#CC0000',
+          accent: '#3B82F6',
+          textPrimary: '#FFFFFF',
+          textSecondary: '#AAAAAA',
         },
-        accent: {
+        brand: {
           50: '#fff1f2',
           100: '#ffe4e6',
           200: '#fecdd3',
           300: '#fda4af',
           400: '#fb7185',
-          500: '#f43f5e',
-          600: '#e11d48',
-          700: '#be123c',
-          800: '#9f1239',
-          900: '#881337',
-          950: '#4c0519',
-        }
+          500: '#FF0000', // Red primary
+          600: '#CC0000',
+          700: '#990000',
+          800: '#660000',
+          900: '#330000',
+          950: '#1a0000',
+        },
       },
       fontFamily: {
-        sans: ['Outfit', 'Inter', 'sans-serif'],
+        sans: ['Poppins', 'Inter', 'sans-serif'],
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

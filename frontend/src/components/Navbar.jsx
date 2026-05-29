@@ -18,14 +18,14 @@ export default function Navbar({ activeVideo, onBack, onMenuClick }) {
   };
 
   return (
-    <header className="h-20 flex-shrink-0 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/40 px-4 md:px-6 flex items-center justify-between gap-4 shadow-sm relative z-20 transition-all duration-300">
+    <header className="h-20 flex-shrink-0 bg-[#0F0F0F]/80 backdrop-blur-md border-b border-[#303030]/50 px-4 md:px-6 flex items-center justify-between gap-4 shadow-md relative z-20 transition-all duration-300">
       
       {/* Active Video Info */}
       <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
         {/* Menu button for mobile drawer */}
         <button
           onClick={onMenuClick}
-          className="md:hidden p-2 rounded-xl bg-slate-100/80 hover:bg-slate-200 dark:bg-slate-900/80 dark:hover:bg-slate-850 border border-slate-200/40 dark:border-slate-800/40 text-slate-650 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
+          className="md:hidden p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#212121] border border-[#303030] text-[#AAAAAA] hover:text-white transition-all cursor-pointer btn-premium"
           title="Open Sidebar"
         >
           <Menu className="w-4.5 h-4.5" />
@@ -33,14 +33,14 @@ export default function Navbar({ activeVideo, onBack, onMenuClick }) {
 
         <button
           onClick={onBack}
-          className="p-2 rounded-xl bg-slate-100/80 hover:bg-slate-200 dark:bg-slate-900/80 dark:hover:bg-slate-850 border border-slate-200/40 dark:border-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer flex-shrink-0"
+          className="p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#212121] border border-[#303030] text-[#AAAAAA] hover:text-white transition-all cursor-pointer flex-shrink-0 btn-premium"
           title="Back to Landing Page"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4.5 h-4.5" />
         </button>
 
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <div className="w-12 h-9 md:w-14 md:h-10 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/40 dark:border-slate-800/40 flex-shrink-0 shadow-sm">
+          <div className="w-12 h-9 md:w-14 md:h-10 rounded-xl overflow-hidden bg-[#212121] border border-[#303030] flex-shrink-0 shadow-sm">
             <img
               src={activeVideo.thumbnail_url}
               alt={activeVideo.title}
@@ -52,17 +52,17 @@ export default function Navbar({ activeVideo, onBack, onMenuClick }) {
           </div>
 
           <div className="min-w-0 flex-1">
-            <h2 className="text-xs md:text-sm font-extrabold text-slate-800 dark:text-slate-100 truncate leading-snug">
+            <h2 className="text-xs md:text-sm font-extrabold text-white truncate leading-snug font-sans">
               {activeVideo.title}
             </h2>
-            <div className="flex items-center gap-2 md:gap-3 text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-semibold mt-0.5">
+            <div className="flex items-center gap-2 md:gap-3 text-[10px] md:text-xs text-[#AAAAAA] font-semibold mt-0.5">
               <span className="flex items-center gap-1 min-w-0">
-                <User className="w-3 h-3 text-slate-450 dark:text-slate-500 flex-shrink-0" />
+                <User className="w-3 h-3 text-zinc-500 flex-shrink-0" />
                 <span className="truncate max-w-[80px] sm:max-w-[120px] md:max-w-xs">{activeVideo.author}</span>
               </span>
-              <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full flex-shrink-0" />
+              <span className="w-1 h-1 bg-[#303030] rounded-full flex-shrink-0" />
               <span className="flex items-center gap-1 flex-shrink-0">
-                <Clock className="w-3 h-3 text-slate-450 dark:text-slate-500" />
+                <Clock className="w-3 h-3 text-zinc-500" />
                 <span>{formatDuration(activeVideo.duration)}</span>
               </span>
             </div>
@@ -72,7 +72,7 @@ export default function Navbar({ activeVideo, onBack, onMenuClick }) {
 
       {/* Action / Controls */}
       <div className="flex items-center gap-3">
-        <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-200/50 dark:border-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
+        <span className="hidden sm:inline-flex items-center px-3 py-1 rounded-full bg-red-950/20 border border-red-900/30 text-[#FF0000] text-[10px] font-bold uppercase tracking-wider">
           Indexed
         </span>
         <ThemeToggle />
@@ -80,4 +80,3 @@ export default function Navbar({ activeVideo, onBack, onMenuClick }) {
     </header>
   );
 }
-

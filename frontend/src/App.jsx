@@ -159,7 +159,7 @@ export default function App() {
   const activeChatMessages = activeVideo ? chats[activeVideo.video_id] || [] : [];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-950 font-sans transition-colors duration-300">
+    <div className="flex h-screen overflow-hidden bg-[#0F0F0F] font-sans transition-colors duration-300">
       {/* Sidebar - Collapsible slide-out drawer */}
       <Sidebar
         history={history}
@@ -184,7 +184,7 @@ export default function App() {
             <Navbar activeVideo={activeVideo} onBack={handleNewVideo} onMenuClick={() => setIsSidebarOpen(true)} />
 
             {/* Split Screen Panel for Active Session */}
-            <div className="flex-1 flex flex-col lg:flex-row overflow-hidden bg-zinc-50 dark:bg-zinc-955 transition-colors duration-300">
+            <div className="flex-1 flex flex-col lg:flex-row overflow-hidden bg-[#0F0F0F] transition-colors duration-300">
               {isMobile ? (
                 /* Mobile/Tablet Layout: Render player, tabs bar, and selected tab view */
                 <div className="flex-1 flex flex-col min-w-0 h-full p-4 md:p-6 overflow-hidden max-w-3xl mx-auto w-full">
@@ -193,13 +193,13 @@ export default function App() {
                   </div>
                   
                   {/* Tabs bar */}
-                  <div className="flex border border-zinc-200/60 dark:border-zinc-800/60 mb-4 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md rounded-2xl p-1 shadow-sm">
+                  <div className="flex border border-[#303030]/50 mb-4 bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-1 shadow-lg">
                     <button
                       onClick={() => setActiveTab('chat')}
                       className={`flex-1 py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs font-extrabold transition-all cursor-pointer ${
                         activeTab === 'chat'
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
+                          ? 'bg-[#FF0000] text-white shadow-lg shadow-red-500/10'
+                          : 'text-[#AAAAAA] hover:text-white'
                       }`}
                     >
                       <MessageSquare className="w-4 h-4" />
@@ -209,8 +209,8 @@ export default function App() {
                       onClick={() => setActiveTab('transcript')}
                       className={`flex-1 py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs font-extrabold transition-all cursor-pointer ${
                         activeTab === 'transcript'
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'
+                          ? 'bg-[#FF0000] text-white shadow-lg shadow-red-500/10'
+                          : 'text-[#AAAAAA] hover:text-white'
                       }`}
                     >
                       <FileText className="w-4 h-4" />
