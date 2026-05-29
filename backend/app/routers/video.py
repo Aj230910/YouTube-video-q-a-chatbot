@@ -73,6 +73,8 @@ async def process_video(request: VideoProcessRequest):
     try:
         # 1. Fetch transcript
         logger.info(f"Fetching transcript for video {video_id}...")
+        print("STEP 1: Before transcript fetch")
+        print("STEP 2: Transcript fetched")
         raw_transcript = TranscriptService.fetch_transcript(video_id)
 
         # 2. Chunk transcript (chunks of 500-1000 characters)

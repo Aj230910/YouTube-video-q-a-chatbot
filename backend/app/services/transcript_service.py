@@ -12,14 +12,14 @@ class TranscriptService:
 
         api_key = os.getenv("SUPADATA_API_KEY")
 
-        if not api_key:
-            raise Exception(
-                "SUPADATA_API_KEY not found"
-            )
+        print("=== TRANSCRIPT SERVICE STARTED ===")
+        print("VIDEO ID:", video_id)
+        print("API KEY EXISTS:", bool(api_key))
 
-        video_url = (
-            f"https://www.youtube.com/watch?v={video_id}"
-        )
+        if not api_key:
+            raise Exception("SUPADATA_API_KEY not found")
+
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
 
         response = requests.get(
             "https://api.supadata.ai/v1/youtube/transcript",
@@ -32,39 +32,45 @@ class TranscriptService:
             timeout=30
         )
 
+        print("STATUS CODE:", response.status_code)
+        print("RAW RESPONSE:", response.text[:1000])
+
         if response.status_code != 200:
             raise Exception(
-                f"Supadata API Error: {response.text}"
+                f"Supadata API Error ({response.status_code}): {response.text}"
             )
 
         data = response.json()
 
+        print("JSON RESPONSE:", data)
+
         transcript = []
 
-        for item in data.get(
-            "content",
-            []
-        ):
+        # Case 1: content is list
+        if isinstance(data.get("content"), list):
 
-            transcript.append(
-                {
-                    "text": item.get(
-                        "text",
-                        ""
-                    ),
-                    "start": float(
-                        item.get(
-                            "offset",
-                            0
-                        )
-                    ) / 1000.0,
-                    "duration": float(
-                        item.get(
-                            "duration",
-                            0
-                        )
-                    ) / 1000.0
-                }
+            for item in data["content"]:
+
+                transcript.append({
+                    "text": item.get("text", ""),
+                    "start": float(item.get("offset", 0)) / 1000.0,
+                    "duration": float(item.get("duration", 0)) / 1000.0
+                })
+
+        # Case 2: content is string
+        elif isinstance(data.get("content"), str):
+
+            transcript.append({
+                "text": data["content"],
+                "start": 0.0,
+                "duration": 0.0
+            })
+
+        else:
+            raise Exception(
+                f"Unexpected Supadata response format: {data}"
             )
+
+        print("TRANSCRIPT LENGTH:", len(transcript))
 
         return transcript
