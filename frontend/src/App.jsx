@@ -6,7 +6,7 @@ import VideoPlayer from './components/VideoPlayer';
 import ChatInterface from './components/ChatInterface';
 import TranscriptViewer from './components/TranscriptViewer';
 import { apiService } from './services/api';
-import { MessageSquare, FileText, Play } from 'lucide-react';
+import { MessageSquare, FileText } from 'lucide-react';
 
 export default function App() {
   const [history, setHistory] = useState(() => {
@@ -159,7 +159,8 @@ export default function App() {
   const activeChatMessages = activeVideo ? chats[activeVideo.video_id] || [] : [];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0F0F0F] font-sans transition-colors duration-300">
+    <div className="flex h-screen overflow-hidden bg-[var(--bg-main)] text-[var(--text-primary)] font-sans transition-all duration-300">
+      
       {/* Sidebar - Collapsible slide-out drawer */}
       <Sidebar
         history={history}
@@ -178,71 +179,52 @@ export default function App() {
 
       {/* Main Panel */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
+        {/* Top Navbar */}
+        <Navbar 
+          activeVideo={activeVideo} 
+          onBack={handleNewVideo} 
+          onMenuClick={() => setIsSidebarOpen(true)} 
+        />
+
         {activeVideo ? (
-          <>
-            {/* Top Navbar */}
-            <Navbar activeVideo={activeVideo} onBack={handleNewVideo} onMenuClick={() => setIsSidebarOpen(true)} />
-
-            {/* Split Screen Panel for Active Session */}
-            <div className="flex-1 flex flex-col lg:flex-row overflow-hidden bg-[#0F0F0F] transition-colors duration-300">
-              {isMobile ? (
-                /* Mobile/Tablet Layout: Render player, tabs bar, and selected tab view */
-                <div className="flex-1 flex flex-col min-w-0 h-full p-4 md:p-6 overflow-hidden max-w-3xl mx-auto w-full">
-                  <div className="mb-4 shadow-md rounded-2xl overflow-hidden">
-                    <VideoPlayer videoId={activeVideo.video_id} startTimestamp={activeTimestamp} />
-                  </div>
-                  
-                  {/* Tabs bar */}
-                  <div className="flex border border-[#303030]/50 mb-4 bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-1 shadow-lg">
-                    <button
-                      onClick={() => setActiveTab('chat')}
-                      className={`flex-1 py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs font-extrabold transition-all cursor-pointer ${
-                        activeTab === 'chat'
-                          ? 'bg-[#FF0000] text-white shadow-lg shadow-red-500/10'
-                          : 'text-[#AAAAAA] hover:text-white'
-                      }`}
-                    >
-                      <MessageSquare className="w-4 h-4" />
-                      <span>Chat Assistant</span>
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('transcript')}
-                      className={`flex-1 py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs font-extrabold transition-all cursor-pointer ${
-                        activeTab === 'transcript'
-                          ? 'bg-[#FF0000] text-white shadow-lg shadow-red-500/10'
-                          : 'text-[#AAAAAA] hover:text-white'
-                      }`}
-                    >
-                      <FileText className="w-4 h-4" />
-                      <span>Transcript</span>
-                    </button>
-                  </div>
-
-                  {/* Tab Contents */}
-                  <div className="flex-1 overflow-hidden relative">
-                    {activeTab === 'chat' ? (
-                      <ChatInterface
-                        messages={activeChatMessages}
-                        onSendMessage={handleSendMessage}
-                        isLoading={isAnswering}
-                        error={qaError}
-                        onTimestampClick={handleTimestampClick}
-                      />
-                    ) : (
-                      <TranscriptViewer
-                        transcript={activeVideo.transcript}
-                        onTimestampClick={handleTimestampClick}
-                        videoTitle={activeVideo.title}
-                        activeTimestamp={activeTimestamp}
-                      />
-                    )}
-                  </div>
+          /* Split Screen Panel for Active Session */
+          <div className="flex-1 flex flex-col lg:flex-row overflow-hidden bg-[var(--bg-main)] transition-colors duration-300">
+            {isMobile ? (
+              /* Mobile/Tablet Layout: Render player, tabs bar, and selected tab view */
+              <div className="flex-1 flex flex-col min-w-0 h-full p-4 md:p-6 overflow-hidden max-w-3xl mx-auto w-full">
+                <div className="mb-4 shadow-md rounded-2xl overflow-hidden">
+                  <VideoPlayer videoId={activeVideo.video_id} startTimestamp={activeTimestamp} />
                 </div>
-              ) : (
-                /* Desktop Layout: Split pane with chat on left and player/transcript on right */
-                <>
-                  {/* Left Column: Chat Area */}
-                  <div className="flex-1 flex flex-col min-w-0 h-full p-6 pr-3 overflow-hidden">
+                
+                {/* Tabs bar */}
+                <div className="flex border border-[var(--border-subtle)] mb-4 bg-[var(--bg-panel-80)] backdrop-blur-md rounded-2xl p-1 shadow-lg">
+                  <button
+                    onClick={() => setActiveTab('chat')}
+                    className={`flex-1 py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs font-extrabold transition-all cursor-pointer ${
+                      activeTab === 'chat'
+                        ? 'bg-[var(--primary)] text-white shadow-lg'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                    }`}
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    <span>Chat Assistant</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('transcript')}
+                    className={`flex-1 py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs font-extrabold transition-all cursor-pointer ${
+                      activeTab === 'transcript'
+                        ? 'bg-[var(--primary)] text-white shadow-lg'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                    }`}
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>Transcript</span>
+                  </button>
+                </div>
+
+                {/* Tab Contents */}
+                <div className="flex-1 overflow-hidden relative">
+                  {activeTab === 'chat' ? (
                     <ChatInterface
                       messages={activeChatMessages}
                       onSendMessage={handleSendMessage}
@@ -250,33 +232,53 @@ export default function App() {
                       error={qaError}
                       onTimestampClick={handleTimestampClick}
                     />
-                  </div>
+                  ) : (
+                    <TranscriptViewer
+                      transcript={activeVideo.transcript}
+                      onTimestampClick={handleTimestampClick}
+                      videoTitle={activeVideo.title}
+                      activeTimestamp={activeTimestamp}
+                    />
+                  )}
+                </div>
+              </div>
+            ) : (
+              /* Desktop Layout: Split pane with chat on left and player/transcript on right */
+              <>
+                {/* Left Column: Chat Area */}
+                <div className="flex-1 flex flex-col min-w-0 h-full p-6 pr-3 overflow-hidden">
+                  <ChatInterface
+                    messages={activeChatMessages}
+                    onSendMessage={handleSendMessage}
+                    isLoading={isAnswering}
+                    error={qaError}
+                    onTimestampClick={handleTimestampClick}
+                  />
+                </div>
 
-                  {/* Right Column: Video player & Transcript Viewer */}
-                  <div className="flex w-[460px] lg:w-[480px] xl:w-[580px] flex-shrink-0 flex-col h-full p-6 pl-3 overflow-hidden gap-6">
-                    <div className="shadow-lg rounded-2xl overflow-hidden">
-                      <VideoPlayer videoId={activeVideo.video_id} startTimestamp={activeTimestamp} />
-                    </div>
-                    <div className="flex-1 overflow-hidden">
-                      <TranscriptViewer
-                        transcript={activeVideo.transcript}
-                        onTimestampClick={handleTimestampClick}
-                        videoTitle={activeVideo.title}
-                        activeTimestamp={activeTimestamp}
-                      />
-                    </div>
+                {/* Right Column: Video player & Transcript Viewer */}
+                <div className="flex w-[460px] lg:w-[480px] xl:w-[580px] flex-shrink-0 flex-col h-full p-6 pl-3 overflow-hidden gap-6">
+                  <div className="shadow-lg rounded-2xl overflow-hidden">
+                    <VideoPlayer videoId={activeVideo.video_id} startTimestamp={activeTimestamp} />
                   </div>
-                </>
-              )}
-            </div>
-          </>
+                  <div className="flex-1 overflow-hidden">
+                    <TranscriptViewer
+                      transcript={activeVideo.transcript}
+                      onTimestampClick={handleTimestampClick}
+                      videoTitle={activeVideo.title}
+                      activeTimestamp={activeTimestamp}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         ) : (
           /* Landing Screen */
           <LandingPage
             onProcess={handleProcessVideo}
             isLoading={isProcessing}
             error={processingError}
-            onMenuClick={() => setIsSidebarOpen(true)}
           />
         )}
       </div>

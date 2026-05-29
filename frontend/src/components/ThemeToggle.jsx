@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 
 export default function ThemeToggle() {
@@ -16,16 +17,26 @@ export default function ThemeToggle() {
   }, [darkMode]);
 
   return (
-    <button
-      onClick={() => setDarkMode(!darkMode)}
-      className="p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#212121] border border-[#303030] text-[#AAAAAA] hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/50 btn-premium"
-      aria-label="Toggle Theme"
-    >
-      {darkMode ? (
-        <Sun className="w-5 h-5 text-[#FF0000] animate-pulse-slow" />
-      ) : (
-        <Moon className="w-5 h-5 text-indigo-400" />
-      )}
-    </button>
+    <div className="flex items-center gap-2">
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className={`w-13 h-7.5 rounded-full p-1 cursor-pointer transition-colors duration-300 flex items-center ${
+          darkMode ? 'bg-[var(--accent)]' : 'bg-[#E9E9EB]'
+        }`}
+        aria-label="Toggle Theme"
+      >
+        <motion.div
+          layout
+          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+          className="w-5.5 h-5.5 rounded-full bg-white shadow flex items-center justify-center"
+        >
+          {darkMode ? (
+            <Moon className="w-3 h-3 text-[var(--accent)]" />
+          ) : (
+            <Sun className="w-3 h-3 text-[#8E8E93]" />
+          )}
+        </motion.div>
+      </button>
+    </div>
   );
 }
