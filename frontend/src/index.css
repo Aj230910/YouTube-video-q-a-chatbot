@@ -2,41 +2,41 @@
 @config "../tailwind.config.js";
 
 :root {
-  --bg-main: #F5F5F7; /* Apple premium light gray background */
+  --bg-main: #FFFFFF; /* Pure White background */
   --bg-sidebar: #FFFFFF;
   --bg-panel: #FFFFFF;
-  --bg-card: rgba(255, 255, 255, 0.72);
-  --bg-subtle: #FBFBFD;
-  --bg-hover: #F0F0F3;
-  --border-color: #D2D2D7; /* Apple light border */
-  --border-subtle: rgba(210, 210, 215, 0.4);
-  --text-primary: #1D1D1F; /* Apple dark primary text */
-  --text-secondary: #6E6E73; /* Apple gray secondary text */
-  --text-muted: #AEAEB2;
-  --accent: #0071E3; /* Apple SF Link Blue */
-  --accent-hover: #0077ED;
-  --accent-glow: rgba(0, 113, 227, 0.08);
-  --glow-accent-color: rgba(0, 113, 227, 0.04);
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-subtle: #F9FAFB;
+  --bg-hover: #F3F4F6;
+  --border-color: #E4E4E7;
+  --border-subtle: rgba(228, 228, 231, 0.6);
+  --text-primary: #0F0F10;
+  --text-secondary: #52525B;
+  --text-muted: #A1A1AA;
+  --accent: #7C3AED; /* Premium Violet Accent */
+  --accent-hover: #6D28D9;
+  --accent-glow: rgba(124, 58, 237, 0.08);
+  --glow-accent-color: rgba(124, 58, 237, 0.04);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
 }
 
 .dark {
-  --bg-main: #000000; /* Apple premium true black */
-  --bg-sidebar: #161617; /* Apple dark sidebar */
-  --bg-panel: #1C1C1E; /* Apple dark panel */
-  --bg-card: rgba(28, 28, 30, 0.72);
-  --bg-subtle: #1C1C1E;
-  --bg-hover: #2C2C2E;
-  --border-color: #3A3A3C;
-  --border-subtle: rgba(58, 58, 60, 0.4);
-  --text-primary: #F5F5F7;
-  --text-secondary: #86868B;
-  --text-muted: #6E6E73;
-  --accent: #2997FF; /* Apple SF dark mode blue */
-  --accent-hover: #51A8FF;
-  --accent-glow: rgba(41, 151, 255, 0.12);
-  --glow-accent-color: rgba(41, 151, 255, 0.08);
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  --bg-main: #FFFFFF; /* Changed black to white */
+  --bg-sidebar: #FFFFFF;
+  --bg-panel: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-subtle: #F9FAFB;
+  --bg-hover: #F3F4F6;
+  --border-color: #E4E4E7;
+  --border-subtle: rgba(228, 228, 231, 0.6);
+  --text-primary: #0F0F10;
+  --text-secondary: #52525B;
+  --text-muted: #A1A1AA;
+  --accent: #7C3AED;
+  --accent-hover: #6D28D9;
+  --accent-glow: rgba(124, 58, 237, 0.08);
+  --glow-accent-color: rgba(124, 58, 237, 0.04);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
 }
 
 @layer base {
