@@ -42,7 +42,7 @@ class TranscriptService:
         transcript = []
 
         for item in data.get(
-            "transcript",
+            "content",
             []
         ):
 
@@ -57,8 +57,13 @@ class TranscriptService:
                             "offset",
                             0
                         )
-                    ),
-                    "duration": 0.0
+                    ) / 1000.0,
+                    "duration": float(
+                        item.get(
+                            "duration",
+                            0
+                        )
+                    ) / 1000.0
                 }
             )
 
