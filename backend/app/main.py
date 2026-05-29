@@ -31,16 +31,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configure CORS Middleware
-# Allows the React frontend to communicate with the FastAPI backend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], # In production, restrict this to specific origins
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Middleware to measure request execution time
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
@@ -49,6 +39,16 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.time() - start_time
     response.headers["X-Process-Time"] = f"{process_time:.4f}s"
     return response
+
+# Configure CORS Middleware
+# Added after other middleware to ensure it runs outermost on the response path
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # In production, restrict this to specific origins
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Include routers
 app.include_router(video.router)
