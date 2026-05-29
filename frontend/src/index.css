@@ -2,41 +2,41 @@
 @config "../tailwind.config.js";
 
 :root {
-  --bg-main: #F4F5F7;
+  --bg-main: #F5F5F7; /* Apple premium light gray background */
   --bg-sidebar: #FFFFFF;
   --bg-panel: #FFFFFF;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-subtle: #F9FAFB;
-  --bg-hover: #F3F4F6;
-  --border-color: #E4E4E7;
-  --border-subtle: rgba(228, 228, 231, 0.5);
-  --text-primary: #0F0F10;
-  --text-secondary: #52525B;
-  --text-muted: #8E8E93;
-  --accent: #E11D48; /* YouTube Rose/Red for Light Mode */
-  --accent-hover: #BE123C;
-  --accent-glow: rgba(225, 29, 72, 0.08);
-  --glow-accent-color: rgba(59, 130, 246, 0.06);
-  --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.03);
+  --bg-card: rgba(255, 255, 255, 0.72);
+  --bg-subtle: #FBFBFD;
+  --bg-hover: #F0F0F3;
+  --border-color: #D2D2D7; /* Apple light border */
+  --border-subtle: rgba(210, 210, 215, 0.4);
+  --text-primary: #1D1D1F; /* Apple dark primary text */
+  --text-secondary: #6E6E73; /* Apple gray secondary text */
+  --text-muted: #AEAEB2;
+  --accent: #0071E3; /* Apple SF Link Blue */
+  --accent-hover: #0077ED;
+  --accent-glow: rgba(0, 113, 227, 0.08);
+  --glow-accent-color: rgba(0, 113, 227, 0.04);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
 }
 
 .dark {
-  --bg-main: #0F0F0F;
-  --bg-sidebar: #0F0F0F;
-  --bg-panel: #1A1A1A;
-  --bg-card: rgba(33, 33, 33, 0.7);
-  --bg-subtle: #111111;
-  --bg-hover: #212121;
-  --border-color: #303030;
-  --border-subtle: rgba(48, 48, 48, 0.5);
-  --text-primary: #FFFFFF;
-  --text-secondary: #AAAAAA;
-  --text-muted: #52525B;
-  --accent: #FF0000; /* YouTube Red for Dark Mode */
-  --accent-hover: #CC0000;
-  --accent-glow: rgba(255, 0, 0, 0.12);
-  --glow-accent-color: rgba(59, 130, 246, 0.08);
-  --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
+  --bg-main: #000000; /* Apple premium true black */
+  --bg-sidebar: #161617; /* Apple dark sidebar */
+  --bg-panel: #1C1C1E; /* Apple dark panel */
+  --bg-card: rgba(28, 28, 30, 0.72);
+  --bg-subtle: #1C1C1E;
+  --bg-hover: #2C2C2E;
+  --border-color: #3A3A3C;
+  --border-subtle: rgba(58, 58, 60, 0.4);
+  --text-primary: #F5F5F7;
+  --text-secondary: #86868B;
+  --text-muted: #6E6E73;
+  --accent: #2997FF; /* Apple SF dark mode blue */
+  --accent-hover: #51A8FF;
+  --accent-glow: rgba(41, 151, 255, 0.12);
+  --glow-accent-color: rgba(41, 151, 255, 0.08);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 @layer base {
@@ -66,28 +66,28 @@
   background: var(--accent);
 }
 
-/* Glassmorphism Panels Inspired by Linear & ChatGPT */
+/* Glassmorphism Panels Inspired by Apple Design */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
 }
 
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow);
 }
 
-/* Cinematic Glow Effects */
+/* Apple-style Soft Radial Glow Effects */
 .glow-primary {
   position: absolute;
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(255, 0, 0, 0) 70%);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
@@ -97,7 +97,7 @@
   position: absolute;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, var(--glow-accent-color) 0%, rgba(59, 130, 246, 0) 75%);
+  background: radial-gradient(circle, var(--glow-accent-color) 0%, transparent 75%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
@@ -172,139 +172,139 @@
 }
 
 .text-gradient-accent {
-  background: linear-gradient(135deg, #3B82F6 0%, var(--accent) 100%);
+  background: linear-gradient(135deg, #0071E3 0%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* LIGHT MODE OVERRIDES FOR INLINE HEX TAILWIND STYLES */
-html:not(.dark) body {
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-}
-
-html:not(.dark) .bg-\[\#0F0F0F\] {
+/* GLOBAL MAPPING FOR ALL TAILWIND HEX CLASSES - LIGHT & DARK */
+.bg-\[\#0F0F0F\] {
   background-color: var(--bg-main) !important;
 }
-html:not(.dark) .bg-\[\#1A1A1A\] {
+.bg-\[\#1A1A1A\] {
   background-color: var(--bg-panel) !important;
 }
-html:not(.dark) .bg-\[\#212121\] {
+.bg-\[\#212121\] {
   background-color: var(--bg-hover) !important;
 }
-html:not(.dark) .bg-\[\#0A0A0A\] {
-  background-color: var(--bg-main) !important;
+.bg-\[\#0A0A0A\] {
+  background-color: var(--bg-sidebar) !important;
 }
-html:not(.dark) .bg-zinc-950 {
+.bg-zinc-950 {
   background-color: var(--bg-main) !important;
 }
 
 /* Translucent Backgrounds */
-html:not(.dark) .bg-\[\#1A1A1A\]\/80 {
-  background-color: rgba(255, 255, 255, 0.8) !important;
+.bg-\[\#1A1A1A\]\/80 {
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
 }
-html:not(.dark) .bg-\[\#212121\]\/70 {
-  background-color: rgba(243, 244, 246, 0.75) !important;
+.bg-\[\#212121\]\/70 {
+  background-color: var(--bg-hover) !important;
+  opacity: 0.95;
 }
-html:not(.dark) .bg-\[\#1A1A1A\]\/30 {
-  background-color: rgba(243, 244, 246, 0.3) !important;
+.bg-\[\#1A1A1A\]\/30 {
+  background-color: var(--bg-hover) !important;
+  opacity: 0.3;
 }
-html:not(.dark) .bg-red-950\/20 {
-  background-color: rgba(254, 226, 226, 0.5) !important;
+.bg-red-950\/20 {
+  background-color: var(--accent-glow) !important;
 }
-html:not(.dark) .bg-blue-950\/20 {
-  background-color: rgba(219, 234, 254, 0.5) !important;
+.bg-blue-950\/20 {
+  background-color: rgba(0, 113, 227, 0.08) !important;
 }
-html:not(.dark) .bg-purple-950\/20 {
-  background-color: rgba(243, 232, 255, 0.5) !important;
+.bg-purple-950\/20 {
+  background-color: rgba(163, 58, 253, 0.08) !important;
 }
 
 /* Borders */
-html:not(.dark) .border-\[\#303030\] {
+.border-\[\#303030\] {
   border-color: var(--border-color) !important;
 }
-html:not(.dark) .border-\[\#303030\]\/50 {
+.border-\[\#303030\]\/50 {
   border-color: var(--border-subtle) !important;
 }
-html:not(.dark) .border-\[\#303030\]\/40 {
-  border-color: rgba(228, 228, 231, 0.4) !important;
+.border-\[\#303030\]\/40 {
+  border-color: var(--border-subtle) !important;
 }
-html:not(.dark) .border-\[\#303030\]\/60 {
-  border-color: rgba(228, 228, 231, 0.6) !important;
+.border-\[\#303030\]\/60 {
+  border-color: var(--border-subtle) !important;
 }
-html:not(.dark) .border-red-900\/30 {
-  border-color: rgba(252, 165, 165, 0.5) !important;
+.border-red-900\/30 {
+  border-color: var(--border-subtle) !important;
 }
-html:not(.dark) .border-blue-900\/30 {
-  border-color: rgba(147, 197, 253, 0.5) !important;
+.border-blue-900\/30 {
+  border-color: var(--border-subtle) !important;
 }
-html:not(.dark) .border-purple-900\/30 {
-  border-color: rgba(216, 180, 254, 0.5) !important;
+.border-purple-900\/30 {
+  border-color: var(--border-subtle) !important;
 }
 
 /* Text Colors */
-html:not(.dark) .text-white {
+.text-white {
   color: var(--text-primary) !important;
 }
-html:not(.dark) .text-\[\#AAAAAA\] {
+.text-\[\#AAAAAA\] {
   color: var(--text-secondary) !important;
 }
-html:not(.dark) .text-zinc-150,
-html:not(.dark) .text-zinc-100 {
-  color: #27272A !important;
+.text-zinc-150,
+.text-zinc-100 {
+  color: var(--text-primary) !important;
 }
-html:not(.dark) .text-zinc-650,
-html:not(.dark) .text-zinc-500 {
+.text-zinc-650,
+.text-zinc-500 {
   color: var(--text-muted) !important;
 }
-html:not(.dark) .text-red-400 {
-  color: #DC2626 !important;
-}
-
-/* Red Accent overrides in Light Theme */
-html:not(.dark) .bg-\[\#FF0000\] {
-  background-color: var(--accent) !important;
-}
-html:not(.dark) .hover\:bg-\[\#CC0000\]:hover,
-html:not(.dark) .bg-\[\#CC0000\] {
-  background-color: var(--accent-hover) !important;
-}
-html:not(.dark) .text-\[\#FF0000\] {
+.text-red-400 {
   color: var(--accent) !important;
 }
-html:not(.dark) .hover\:text-\[\#CC0000\]:hover {
+
+/* Red Accent overrides globally mapped to Apple Blue */
+.bg-\[\#FF0000\] {
+  background-color: var(--accent) !important;
+}
+.hover\:bg-\[\#CC0000\]:hover,
+.bg-\[\#CC0000\] {
+  background-color: var(--accent-hover) !important;
+}
+.text-\[\#FF0000\] {
+  color: var(--accent) !important;
+}
+.hover\:text-\[\#CC0000\]:hover {
   color: var(--accent-hover) !important;
 }
-html:not(.dark) .border-\[\#FF0000\] {
+.border-\[\#FF0000\] {
   border-color: var(--accent) !important;
 }
-html:not(.dark) .border-\[\#FF0000\]\/40 {
-  border-color: rgba(225, 29, 72, 0.4) !important;
+.border-\[\#FF0000\]\/40 {
+  border-color: var(--accent-glow) !important;
 }
-html:not(.dark) .focus-within\:border-\[\#FF0000\]:focus-within {
+.focus-within\:border-\[\#FF0000\]:focus-within {
   border-color: var(--accent) !important;
 }
-html:not(.dark) .focus-within\:ring-red-500\/10:focus-within {
-  --tw-ring-color: rgba(225, 29, 72, 0.1) !important;
+.focus-within\:ring-red-500\/10:focus-within {
+  --tw-ring-color: var(--accent-glow) !important;
 }
 
 /* Shadows and gradients */
-html:not(.dark) .soft-shadow {
+.soft-shadow {
   box-shadow: var(--shadow) !important;
 }
-html:not(.dark) .shadow-red-500\/10 {
-  box-shadow: 0 4px 14px 0 rgba(225, 29, 72, 0.1) !important;
+.shadow-red-500\/10 {
+  box-shadow: 0 4px 14px 0 var(--accent-glow) !important;
 }
-html:not(.dark) .shadow-red-500\/15 {
-  box-shadow: 0 4px 14px 0 rgba(225, 29, 72, 0.15) !important;
+.shadow-red-500\/15 {
+  box-shadow: 0 4px 14px 0 var(--accent-glow) !important;
 }
-html:not(.dark) .shadow-red-500\/30 {
-  box-shadow: 0 4px 20px 0 rgba(225, 29, 72, 0.25) !important;
+.shadow-red-500\/30 {
+  box-shadow: 0 4px 20px 0 var(--accent-glow) !important;
 }
-html:not(.dark) .shadow-red-500\/35 {
-  box-shadow: 0 4px 20px 0 rgba(225, 29, 72, 0.25) !important;
+.shadow-red-500\/35 {
+  box-shadow: 0 4px 20px 0 var(--accent-glow) !important;
 }
-html:not(.dark) .shadow-2xl {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05) !important;
+.shadow-2xl {
+  box-shadow: var(--shadow) !important;
 }
+
 
