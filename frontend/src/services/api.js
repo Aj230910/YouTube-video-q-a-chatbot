@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+let API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+// Automatically upgrade http to https in production environments to avoid mixed content issues
+if (window.location.protocol === 'https:' && API_BASE_URL.startsWith('http://') && !API_BASE_URL.includes('localhost') && !API_BASE_URL.includes('127.0.0.1')) {
+  API_BASE_URL = API_BASE_URL.replace('http://', 'https://');
+}
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

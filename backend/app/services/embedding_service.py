@@ -40,16 +40,27 @@ class EmbeddingService:
     def generate_embeddings(cls, texts: List[str]) -> np.ndarray:
         """
         Generates vector embeddings for a list of text chunks.
+        Optimized with batch_size=1, no_grad, and garbage collection to prevent OOM on Render.
         """
+        import torch
+        import gc
         model = cls.get_model()
-        embeddings = model.encode(texts, show_progress_bar=False)
-        return np.array(embeddings).astype('float32')
+        with torch.no_grad():
+            embeddings = model.encode(texts, batch_size=1, show_progress_bar=False)
+        result = np.array(embeddings).astype('float32')
+        gc.collect()
+        return result
 
     @classmethod
     def generate_query_embedding(cls, query: str) -> np.ndarray:
         """
         Generates vector embedding for a single user query.
         """
+        import torch
+        import gc
         model = cls.get_model()
-        embedding = model.encode(query, show_progress_bar=False)
-        return np.array(embedding).astype('float32')
+        with torch.no_grad():
+            embedding = model.encode(query, batch_size=1, show_progress_bar=False)
+        result = np.array(embedding).astype('float32')
+        gc.collect()
+        return result
