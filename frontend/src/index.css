@@ -1,10 +1,49 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+:root {
+  --bg-main: #F4F5F7;
+  --bg-sidebar: #FFFFFF;
+  --bg-panel: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-subtle: #F9FAFB;
+  --bg-hover: #F3F4F6;
+  --border-color: #E4E4E7;
+  --border-subtle: rgba(228, 228, 231, 0.5);
+  --text-primary: #0F0F10;
+  --text-secondary: #52525B;
+  --text-muted: #8E8E93;
+  --accent: #E11D48; /* YouTube Rose/Red for Light Mode */
+  --accent-hover: #BE123C;
+  --accent-glow: rgba(225, 29, 72, 0.08);
+  --glow-accent-color: rgba(59, 130, 246, 0.06);
+  --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.03);
+}
+
+.dark {
+  --bg-main: #0F0F0F;
+  --bg-sidebar: #0F0F0F;
+  --bg-panel: #1A1A1A;
+  --bg-card: rgba(33, 33, 33, 0.7);
+  --bg-subtle: #111111;
+  --bg-hover: #212121;
+  --border-color: #303030;
+  --border-subtle: rgba(48, 48, 48, 0.5);
+  --text-primary: #FFFFFF;
+  --text-secondary: #AAAAAA;
+  --text-muted: #52525B;
+  --accent: #FF0000; /* YouTube Red for Dark Mode */
+  --accent-hover: #CC0000;
+  --accent-glow: rgba(255, 0, 0, 0.12);
+  --glow-accent-color: rgba(59, 130, 246, 0.08);
+  --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
+}
+
 @layer base {
   body {
-    @apply bg-zinc-950 text-white font-sans antialiased selection:bg-red-500/30 selection:text-white transition-colors duration-300;
-    background-color: #0F0F0F;
+    @apply font-sans antialiased transition-colors duration-300;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
   }
 }
 
@@ -15,40 +54,40 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0F0F0F;
+  background: var(--bg-main);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #303030;
+  background: var(--border-color);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF0000;
+  background: var(--accent);
 }
 
 /* Glassmorphism Panels Inspired by Linear & ChatGPT */
 .glass-panel {
-  background: rgba(26, 26, 26, 0.75);
+  background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(48, 48, 48, 0.5);
+  border: 1px solid var(--border-subtle);
 }
 
 .glass-card {
-  background: rgba(33, 33, 33, 0.7);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(48, 48, 48, 0.6);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow);
 }
 
-/* Cinematic Red Glow Effects */
+/* Cinematic Glow Effects */
 .glow-primary {
   position: absolute;
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.12) 0%, rgba(255, 0, 0, 0) 70%);
+  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(255, 0, 0, 0) 70%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
@@ -58,7 +97,7 @@
   position: absolute;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0) 75%);
+  background: radial-gradient(circle, var(--glow-accent-color) 0%, rgba(59, 130, 246, 0) 75%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
@@ -66,25 +105,25 @@
 
 /* Active Item Glow */
 .active-item-glow {
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.15);
-  border-color: rgba(255, 0, 0, 0.45) !important;
+  box-shadow: 0 0 15px var(--accent-glow);
+  border-color: var(--accent) !important;
 }
 
 /* Premium Focus Outline */
 .neon-border {
   @apply transition-all duration-200 border rounded-2xl;
-  border-color: #303030;
-  background-color: #1A1A1A;
+  border-color: var(--border-color);
+  background-color: var(--bg-panel);
 }
 
 .neon-border:focus-within {
-  border-color: #FF0000;
-  box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
 }
 
 /* Soft shadows & Depth */
 .soft-shadow {
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow);
 }
 
 /* Custom premium hover scale animations */
@@ -93,8 +132,8 @@
 }
 
 .hover-glow:hover {
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-  border-color: rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 20px var(--accent-glow);
+  border-color: var(--accent);
 }
 
 /* Dynamic Animation utilities */
@@ -127,13 +166,145 @@
 
 /* Premium gradient titles */
 .text-gradient-red {
-  background: linear-gradient(135deg, #FFFFFF 30%, #FF5555 100%);
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-accent {
-  background: linear-gradient(135deg, #3B82F6 0%, #FF0000 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* LIGHT MODE OVERRIDES FOR INLINE HEX TAILWIND STYLES */
+html:not(.dark) body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+}
+
+html:not(.dark) .bg-\[\#0F0F0F\] {
+  background-color: var(--bg-main) !important;
+}
+html:not(.dark) .bg-\[\#1A1A1A\] {
+  background-color: var(--bg-panel) !important;
+}
+html:not(.dark) .bg-\[\#212121\] {
+  background-color: var(--bg-hover) !important;
+}
+html:not(.dark) .bg-\[\#0A0A0A\] {
+  background-color: var(--bg-main) !important;
+}
+html:not(.dark) .bg-zinc-950 {
+  background-color: var(--bg-main) !important;
+}
+
+/* Translucent Backgrounds */
+html:not(.dark) .bg-\[\#1A1A1A\]\/80 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+html:not(.dark) .bg-\[\#212121\]\/70 {
+  background-color: rgba(243, 244, 246, 0.75) !important;
+}
+html:not(.dark) .bg-\[\#1A1A1A\]\/30 {
+  background-color: rgba(243, 244, 246, 0.3) !important;
+}
+html:not(.dark) .bg-red-950\/20 {
+  background-color: rgba(254, 226, 226, 0.5) !important;
+}
+html:not(.dark) .bg-blue-950\/20 {
+  background-color: rgba(219, 234, 254, 0.5) !important;
+}
+html:not(.dark) .bg-purple-950\/20 {
+  background-color: rgba(243, 232, 255, 0.5) !important;
+}
+
+/* Borders */
+html:not(.dark) .border-\[\#303030\] {
+  border-color: var(--border-color) !important;
+}
+html:not(.dark) .border-\[\#303030\]\/50 {
+  border-color: var(--border-subtle) !important;
+}
+html:not(.dark) .border-\[\#303030\]\/40 {
+  border-color: rgba(228, 228, 231, 0.4) !important;
+}
+html:not(.dark) .border-\[\#303030\]\/60 {
+  border-color: rgba(228, 228, 231, 0.6) !important;
+}
+html:not(.dark) .border-red-900\/30 {
+  border-color: rgba(252, 165, 165, 0.5) !important;
+}
+html:not(.dark) .border-blue-900\/30 {
+  border-color: rgba(147, 197, 253, 0.5) !important;
+}
+html:not(.dark) .border-purple-900\/30 {
+  border-color: rgba(216, 180, 254, 0.5) !important;
+}
+
+/* Text Colors */
+html:not(.dark) .text-white {
+  color: var(--text-primary) !important;
+}
+html:not(.dark) .text-\[\#AAAAAA\] {
+  color: var(--text-secondary) !important;
+}
+html:not(.dark) .text-zinc-150,
+html:not(.dark) .text-zinc-100 {
+  color: #27272A !important;
+}
+html:not(.dark) .text-zinc-650,
+html:not(.dark) .text-zinc-500 {
+  color: var(--text-muted) !important;
+}
+html:not(.dark) .text-red-400 {
+  color: #DC2626 !important;
+}
+
+/* Red Accent overrides in Light Theme */
+html:not(.dark) .bg-\[\#FF0000\] {
+  background-color: var(--accent) !important;
+}
+html:not(.dark) .hover\:bg-\[\#CC0000\]:hover,
+html:not(.dark) .bg-\[\#CC0000\] {
+  background-color: var(--accent-hover) !important;
+}
+html:not(.dark) .text-\[\#FF0000\] {
+  color: var(--accent) !important;
+}
+html:not(.dark) .hover\:text-\[\#CC0000\]:hover {
+  color: var(--accent-hover) !important;
+}
+html:not(.dark) .border-\[\#FF0000\] {
+  border-color: var(--accent) !important;
+}
+html:not(.dark) .border-\[\#FF0000\]\/40 {
+  border-color: rgba(225, 29, 72, 0.4) !important;
+}
+html:not(.dark) .focus-within\:border-\[\#FF0000\]:focus-within {
+  border-color: var(--accent) !important;
+}
+html:not(.dark) .focus-within\:ring-red-500\/10:focus-within {
+  --tw-ring-color: rgba(225, 29, 72, 0.1) !important;
+}
+
+/* Shadows and gradients */
+html:not(.dark) .soft-shadow {
+  box-shadow: var(--shadow) !important;
+}
+html:not(.dark) .shadow-red-500\/10 {
+  box-shadow: 0 4px 14px 0 rgba(225, 29, 72, 0.1) !important;
+}
+html:not(.dark) .shadow-red-500\/15 {
+  box-shadow: 0 4px 14px 0 rgba(225, 29, 72, 0.15) !important;
+}
+html:not(.dark) .shadow-red-500\/30 {
+  box-shadow: 0 4px 20px 0 rgba(225, 29, 72, 0.25) !important;
+}
+html:not(.dark) .shadow-red-500\/35 {
+  box-shadow: 0 4px 20px 0 rgba(225, 29, 72, 0.25) !important;
+}
+html:not(.dark) .shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05) !important;
+}
+
