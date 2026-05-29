@@ -64,10 +64,14 @@ async def add_process_time_header(request: Request, call_next):
 # Added after other middleware to ensure it runs outermost on the response path
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, restrict this to specific origins
-    allow_credentials=False,
+    allow_origins=[
+        "https://you-tube-video-q-a-chatbot.vercel.app",
+        "http://localhost:5173"
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 # Include routers
