@@ -76,13 +76,17 @@ app.include_router(qa.router)
 
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Pre-loading SentenceTransformer model on startup...")
-    try:
-        from app.services.embedding_service import EmbeddingService
-        EmbeddingService.get_model()
-        logger.info("SentenceTransformer model loaded successfully.")
-    except Exception as e:
-        logger.error(f"Failed to pre-load SentenceTransformer model: {str(e)}")
+    import threading
+    logger.info("Starting background thread to pre-load SentenceTransformer model...")
+    def load_model():
+        try:
+            from app.services.embedding_service import EmbeddingService
+            EmbeddingService.get_model()
+            logger.info("SentenceTransformer model loaded successfully in background thread.")
+        except Exception as e:
+            logger.error(f"Failed to pre-load SentenceTransformer model in background: {str(e)}")
+    
+    threading.Thread(target=load_model, daemon=True).start()
 
 @app.get("/health", response_model=HealthResponse, tags=["health"])
 async def health_check():
