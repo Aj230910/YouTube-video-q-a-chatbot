@@ -1,0 +1,84 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans transition-colors duration-300 antialiased;
+  }
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-200 dark:bg-zinc-800 rounded-full hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors;
+}
+
+/* Modern Apple-style panels */
+.glass-panel {
+  @apply bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg border border-zinc-200/50 dark:border-zinc-800/40;
+}
+
+.glass-card {
+  @apply bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/60 shadow-sm shadow-zinc-200/50 dark:shadow-black/20;
+}
+
+/* Premium Minimalist Apple Gradient Background */
+@keyframes ambient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.mesh-gradient {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(244, 244, 245, 0.6) 0%,
+    rgba(250, 250, 250, 0.9) 100%
+  );
+}
+
+.dark .mesh-gradient {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(9, 9, 11, 0.9) 0%,
+    rgba(18, 18, 20, 0.95) 100%
+  );
+}
+
+/* Apple-style Interactive Focus Outline */
+.neon-border {
+  @apply transition-all duration-200 border border-zinc-200 dark:border-zinc-800 rounded-2xl;
+}
+
+.neon-border:focus-within {
+  @apply border-blue-500 ring-4 ring-blue-500/10 dark:ring-blue-500/20;
+}
+
+/* Animation utilities */
+@keyframes pulse-slow {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
