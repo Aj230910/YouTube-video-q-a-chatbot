@@ -2,41 +2,49 @@
 @config "../tailwind.config.js";
 
 :root {
-  --bg-main: #FFFFFF; /* Pure White background */
+  --bg-main: #F5F5F7; /* Apple-style light background */
+  --bg-main-80: rgba(245, 245, 247, 0.8);
   --bg-sidebar: #FFFFFF;
   --bg-panel: #FFFFFF;
-  --bg-card: rgba(255, 255, 255, 0.9);
-  --bg-subtle: #F9FAFB;
-  --bg-hover: #F3F4F6;
-  --border-color: #E4E4E7;
-  --border-subtle: rgba(228, 228, 231, 0.6);
-  --text-primary: #0F0F10;
-  --text-secondary: #52525B;
-  --text-muted: #A1A1AA;
+  --bg-panel-80: rgba(255, 255, 255, 0.8);
+  --bg-panel-30: rgba(255, 255, 255, 0.3);
+  --bg-card: rgba(255, 255, 255, 0.72);
+  --bg-subtle: #FBFBFD;
+  --bg-hover: #F0F0F3;
+  --bg-hover-70: rgba(240, 240, 243, 0.7);
+  --border-color: #D2D2D7;
+  --border-subtle: rgba(210, 210, 215, 0.4);
+  --text-primary: #1D1D1F;
+  --text-secondary: #6E6E73;
+  --text-muted: #AEAEB2;
   --accent: #7C3AED; /* Premium Violet Accent */
   --accent-hover: #6D28D9;
   --accent-glow: rgba(124, 58, 237, 0.08);
   --glow-accent-color: rgba(124, 58, 237, 0.04);
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
 }
 
 .dark {
-  --bg-main: #FFFFFF; /* Changed black to white */
-  --bg-sidebar: #FFFFFF;
-  --bg-panel: #FFFFFF;
-  --bg-card: rgba(255, 255, 255, 0.9);
-  --bg-subtle: #F9FAFB;
-  --bg-hover: #F3F4F6;
-  --border-color: #E4E4E7;
-  --border-subtle: rgba(228, 228, 231, 0.6);
-  --text-primary: #0F0F10;
-  --text-secondary: #52525B;
-  --text-muted: #A1A1AA;
-  --accent: #7C3AED;
-  --accent-hover: #6D28D9;
-  --accent-glow: rgba(124, 58, 237, 0.08);
-  --glow-accent-color: rgba(124, 58, 237, 0.04);
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+  --bg-main: #0F0F0F; /* Sleek black/dark background restored */
+  --bg-main-80: rgba(15, 15, 15, 0.8);
+  --bg-sidebar: #0F0F0F;
+  --bg-panel: #1A1A1A;
+  --bg-panel-80: rgba(26, 26, 26, 0.8);
+  --bg-panel-30: rgba(26, 26, 26, 0.3);
+  --bg-card: rgba(26, 26, 26, 0.72);
+  --bg-subtle: #111111;
+  --bg-hover: #212121;
+  --bg-hover-70: rgba(33, 33, 33, 0.7);
+  --border-color: #303030;
+  --border-subtle: rgba(48, 48, 48, 0.5);
+  --text-primary: #FFFFFF;
+  --text-secondary: #AAAAAA;
+  --text-muted: #52525B;
+  --accent: #A78BFA; /* Light Violet accent for dark mode readability */
+  --accent-hover: #C084FC;
+  --accent-glow: rgba(167, 139, 250, 0.12);
+  --glow-accent-color: rgba(167, 139, 250, 0.08);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 @layer base {
@@ -195,18 +203,21 @@
 }
 
 /* Translucent Backgrounds */
+.bg-\[\#0F0F0F\]\/80 {
+  background-color: var(--bg-main-80) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
 .bg-\[\#1A1A1A\]\/80 {
-  background: var(--bg-card) !important;
+  background: var(--bg-panel-80) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
 }
 .bg-\[\#212121\]\/70 {
-  background-color: var(--bg-hover) !important;
-  opacity: 0.95;
+  background-color: var(--bg-hover-70) !important;
 }
 .bg-\[\#1A1A1A\]\/30 {
-  background-color: var(--bg-hover) !important;
-  opacity: 0.3;
+  background-color: var(--bg-panel-30) !important;
 }
 .bg-red-950\/20 {
   background-color: var(--accent-glow) !important;
